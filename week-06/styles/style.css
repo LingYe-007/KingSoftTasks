@@ -1,0 +1,112 @@
+#app{
+    overflow-y: hidden;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+/* Button组件样式 */
+#app>button{
+    align-self: flex-start;
+}
+*{
+    margin: 0%;
+    padding: 0%;
+    font-size: 100%;
+}
+.button{
+    white-space: nowrap;
+    float: left;
+    margin-right: -1px;
+    margin-bottom: -1px;
+    padding: 7px 20px;
+    font-size: 13px;
+    margin: 5px;
+    border-radius: 2px;
+}
+.button-default{
+    background: white;
+    color: black;
+    border: 1px solid grey;
+}
+.button-default:hover{
+    border: 1px solid #1890ff;
+    color: #1890ff;
+}
+.button-primary{
+    background:#1890ff;
+    color: white;
+    border:none
+}
+.button-primary:hover{
+    background:#40a9ff;
+}
+/* :after{
+    content: "";
+    display: block;
+    clear: both;
+} */
+
+
+/* Modal组件样式 */
+.show-modal{
+    border-radius: 10px;
+    position:fixed;
+    left: calc(50% - 250px);
+    /* top: 50%;
+    /* transform:translateY(-50%)scale(1); */
+    width: 500px;
+    background: white;
+    transition: all 0.5s;
+}
+h5{
+    font-weight: 300;
+}
+header{
+    padding:30px 30px 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 24;
+}
+main {
+    border-top: solid 0.5px rgba(128,128,128,0.6);
+    border-bottom: solid 0.5px rgba(128,128,128,0.6);
+    padding: 0 30px 0 30px;
+    margin-bottom: 60px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+main>p{
+    margin: 15px 0;
+}
+.show-mask{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background:rgba(0,0,0,0.45);
+    top:0%;
+    left: 0%;
+    opacity: 1;
+    transition: all 0.5s;
+}
+.hidden-mask{
+    visibility: hidden;
+    opacity: 0;
+    transform: opacity 0.5s;
+    /* pointer-events: none; */
+}
+.hidden-modal{
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s;
+    transform: scale(0.1);
+    /* pointer-events: none; */
+}
+footer{
+    position: absolute;
+    right: 10px;
+    bottom: 10px
+}

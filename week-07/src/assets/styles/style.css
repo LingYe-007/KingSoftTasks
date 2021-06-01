@@ -1,0 +1,122 @@
+html {
+  font-size: 10px;
+}
+body {
+  margin: 0;
+  background: #eee;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+@font-face {
+  font-family: icons;
+  src: url("../fonts/icons.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+.iconfont {
+  font-family: icons;
+  font-style: normal;
+  font-weight: 400;
+}
+.icon-comments:before {
+  content: "\e91f"
+}
+.icon-likes:before {
+  content: "\E96D"
+}
+@media screen and (min-width: 320px) {
+  html {
+    font-size: 8.5333px !important;
+  }
+}
+
+@media screen and (min-width: 360px) {
+  html {
+    font-size: 9.6px !important;
+  }
+}
+
+@media screen and (min-width: 375px) {
+  html {
+    font-size: 10px !important;
+  }
+}
+
+@media screen and (min-width: 384px) {
+  html {
+    font-size: 10.24px !important;
+  }
+}
+
+@media screen and (min-width: 411px) {
+  html {
+    font-size: 10.96px !important;
+  }
+}
+
+@media screen and (min-width: 414px) {
+  html {
+    font-size: 11.04px !important;
+  }
+}
+
+@media screen and (min-width: 448px) {
+  html {
+    font-size: 11.9467px !important;
+  }
+}
+
+@media screen and (min-width: 480px) {
+  html {
+    font-size: 12.8px !important;
+  }
+}
+
+@media screen and (min-width: 512px) {
+  html {
+    font-size: 13.6533px !important;
+  }
+}
+
+@media screen and (min-width: 544px) {
+  html {
+    font-size: 14.5067px !important;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  html {
+    font-size: 15.36px !important;
+  }
+}
+
+@media screen and (min-width: 608px) {
+  html {
+    font-size: 16.2133px !important;
+  }
+}
+
+@media screen and (min-width: 640px) {
+  html {
+    font-size: 17.0667px !important;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  html {
+    font-size: 20px !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  html {
+    font-size: 20.48px !important;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  html {
+    font-size: 21.3333px !important;
+  }
+}

@@ -1,0 +1,14 @@
+{
+  // 编译src文件下的ts文件
+  "include": ["./src/*"],
+  // 编译器选项
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "noImplicitAny": true,
+    "lib": ["esnext", "dom"],
+    "sourceMap": true,
+    "outDir":"./dist/"
+  },
+  "onEmitOnError":true
+}
