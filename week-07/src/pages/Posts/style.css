@@ -1,25 +1,24 @@
-main{
-    background:#f1eef1;
-    max-width: 1080px;
-    margin: 0 auto;
-    flex:1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling:touch
+main {
+  background: #f1eef1;
+  max-width: 1080px;
+  margin: 0 auto;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
-html{
-    width: 100%;
-    height: 100%;
+html {
+  width: 100%;
+  height: 100%;
 }
-body{
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
-.img-top{
-    position: absolute;
-    top: 0%;
-    left: 0;
-    width: 4rem;
-    height: 2rem;
+.img-top {
+  position: absolute;
+  top: 0%;
+  left: 0;
+  width: 4rem;
 }

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack --config scripts/webpack.config.js",
     "start": "webpack serve --config scripts/webpack.config.js --open",
-    "build": "webpack --config scripts/webpack.prod.js"
+    "build": "webpack --config scripts/webpack.prod.js",
+    "prettier": "prettier --write ./*"
   },
   "private": true,
   "devDependencies": {
