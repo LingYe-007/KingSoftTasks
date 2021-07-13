@@ -1,3 +1,4 @@
+import { Hash } from 'crypto'
 import { ObjectId } from 'mongodb'
 
 export interface IArea {
@@ -21,6 +22,7 @@ export interface IUser{
   password:string
 }
 
-export interface IToken{
-  token:string
+export interface IToken {
+  userId: ObjectId;
+  token: string;
 }

@@ -1,5 +1,5 @@
 {
-  "port": 3360,
+  "port": 3000,
   "mongo_host": "localhost:27017",
   "mongo_db": "mongodemo"
 }

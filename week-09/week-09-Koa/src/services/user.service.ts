@@ -1,10 +1,17 @@
 import { ObjectId } from "mongodb";
 import * as db from "../db";
-import * as crypto from 'crypto'
+import * as crypto from "crypto";
 
 import { IUser } from "../types";
 import { stats } from "../stats";
-import { abort } from "process";
+import { any, string } from "joi";
+
+// 所有用户信息
+export function list() {
+  return db.userCollection
+    .find({}, { projection: { password: false } })
+    .toArray();
+}
 
 // 添加用户记录
 export async function add(user: IUser) {
@@ -12,23 +19,20 @@ export async function add(user: IUser) {
     username: user.username,
   });
   if (users !== null) throw stats.ERR_EXISTS;
-  const hash=crypto.createHash('sha256')
-  hash.update(user.password)
-  console.log(hash)
+  const hash = crypto.createHash("md5");
+  hash.update(user.password);
   let result = await db.userCollection.insertOne({
-    username: users.username,
-    nickname: users.nickname,
-    password: users.password,
+    username: user.username,
+    nickname: user.nickname,
+    password: hash.digest("hex"),
   });
   return result.ops[0];
 }
 
 // 删除记录
-export async function remove(username: string) {
+export async function remove(_id: string) {
   let result = await db.userCollection.findOneAndDelete({
-    _id: {
-      $ne: new ObjectId(username),
-    },
+    _id: new ObjectId(_id),
   });
   if (result.value === null) throw stats.ERR_NOT_FOUND;
   return result.value;
@@ -36,17 +40,23 @@ export async function remove(username: string) {
 
 // 根据用户名来查找
 export async function query(username: string) {
-  let result = await db.userCollection.findOne({
-    username: username,
-  });
+  let result = await db.userCollection.findOne(
+    {
+      username: username,
+    },
+    { projection: { password: false } }
+  );
   if (result == null) throw stats.ERR_NOT_FOUND;
   return result;
 }
 
 // 修改信息
 export async function update(username: string, record: IUser) {
+  const hash = crypto.createHash("md5");
+  hash.update(record.password);
+  record.password = hash.digest("hex");
   let count = await db.userCollection.countDocuments({
-    username: record.username,
+    username: username,
     nickname: record.nickname,
     password: record.password,
   });
@@ -60,4 +70,5 @@ export async function update(username: string, record: IUser) {
     }
   );
   if (result === null) throw stats.ERR_NOT_FOUND;
+  return result;
 }
