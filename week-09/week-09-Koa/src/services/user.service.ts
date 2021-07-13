@@ -43,8 +43,7 @@ export async function query(username: string) {
   let result = await db.userCollection.findOne(
     {
       username: username,
-    },
-    { projection: { password: false } }
+    }
   );
   if (result == null) throw stats.ERR_NOT_FOUND;
   return result;

@@ -24,11 +24,6 @@ export async function findTokenByUser(userId: ObjectId) {
   let result = await db.tokenCollection.findOne(
     {
       userId: userId,
-    },
-    {
-      projection: {
-        createdAt: 0,
-      },
     }
   );
   if (result == null) return null;
@@ -40,11 +35,6 @@ export async function findToken(token: string) {
   let result = await db.tokenCollection.findOne(
     {
       token: token,
-    },
-    {
-      projection: {
-        createdAt: 0,
-      },
     }
   );
   if (result == null) return null;
@@ -56,11 +46,6 @@ export async function addToken(record: IToken) {
   let Token = await db.tokenCollection.findOne(
     {
       userId: record.userId,
-    },
-    {
-      projection: {
-        createdAt: 0,
-      },
     }
   );
   if (Token !== null) throw stats.ERR_EXISTS;
@@ -73,11 +58,6 @@ export async function del(userID: ObjectId) {
   let result = await db.tokenCollection.findOneAndDelete(
     {
       userId: userID,
-    },
-    {
-      projection: {
-        createdAt: 0,
-      },
     }
   );
   if (result.value === null) throw stats.ERR_NOT_FOUND;
