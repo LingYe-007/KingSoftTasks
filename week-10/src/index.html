@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://gw.alicdn.com/tfs/TB1puqzr6MZ7e4jSZFOXXX7epXa-160-160.png"
+    />
+    <title>淘宝</title>
+    <link
+      rel="stylesheet"
+      href="//at.alicdn.com/t/font_2589852_amo0gn1sajf.css"
+    />
+  </head>
+  <body>
+    <script>
+      let doc = document.documentElement;
+      let width = doc.clientWidth;
+      let ratio = width / 375;
+      let fontSize = 10 * ratio;
+      if (fontSize > 20) fontSize = 20;
+      doc.style.fontSize = fontSize + "px";
+    </script>
+    <div id="app"></div>
+  </body>
+</html>

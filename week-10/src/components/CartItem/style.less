@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+}
+
+.Item {
+    width: 100%;
+    border-radius: 0.8rem;
+    background: #fff;
+
+    img {
+        width: 10rem;
+        border-radius: 0.5rem;
+        margin: 0 1rem;
+    }
+}
+
+.ItemContent {
+    display: flex;
+    background: #fff;
+    border: 1rem;
+    padding: 1.5rem;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.CartCheckbox {
+    font-size: 2.5rem;
+    // color: #C6C6C6;
+    align-self: center;
+}
+
+.ItemText {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ItemTitle {
+    font-size: 1.4rem;
+    line-height: 1.5em;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.ItemPrice {
+    margin-top: 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #ff5500;
+}
