@@ -1,20 +1,20 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable } from "mobx";
 
 class Store {
-  username: string = null
-  nickname: string = null
-  avatar: string = null
+  username: string = "";
+  nickname: string = "";
+  avatar: string = "";
   setUsername(name: string) {
-    this.username = name
+    this.username = name;
   }
-  setUser(nickname:string,avatar:string){
-    this.nickname=nickname,
-    this.avatar=avatar
+  setUser(nickname: string, avatar: string) {
+    this.nickname = nickname;
+    this.avatar = avatar;
   }
 
   constructor() {
-    makeAutoObservable(this)
+    makeAutoObservable(this);
   }
 }
 
-export default new Store()
+export default new Store();

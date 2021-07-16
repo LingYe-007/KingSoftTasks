@@ -1,58 +1,57 @@
 import * as React from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Tabbar from "../../components/Tabbar";
-import style from "./style.less";
+import style from "./style.module.scss";
 import * as api from "../../services/api";
 import { IUser } from "../../types";
 import Toast from "../../components/Toast";
-interface State {
-  user: IUser;
-  loading: boolean;
-}
-export default class Me extends React.Component<RouteComponentProps, State> {
-  state: State = {
-    user: null,
-    loading: false,
-  };
-  // 生命周期函数
-  componentDidMount() {
-    this.Login();
-  }
-  // 登陆请求
-  async Login() {
-    let result = await api.userInfo();
-    if (result.stat === "OK") {
-      this.setState({
-        user: result.data,
-        loading: true,
-      });
-    } else {
-      Toast.show("请先登录！");
-      this.props.history.push("/login");
-    }
-  }
-  // 退出登录
-  async Drop() {
+
+export default function Me() {
+  const [user, setUser] = useState<IUser>({
+    username: "",
+    nickname: "",
+    avatar: "",
+    role: 4,
+  });
+  const history = useHistory();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const Drop = async () => {
     await api.logout();
-    this.props.history.push("/login");
-  }
-  render() {
-    return (
-      <div className={style.page}>
-        <div className={style.mine}>
-          <img
-            src={this.state.loading ? this.state.user.avatar : ""}
-            className={style.mineImg}
-          />
-          <div className={style.mineUsername}>
-            {this.state.loading ? this.state.user.nickname : null}
-          </div>
-          <button onClick={this.Drop.bind(this)} className={style.mineButton}>
-            退出登录
-          </button>
+    history.push("/login");
+  };
+
+  useEffect(() => {
+    const Login = async () => {
+      let result = await api.userInfo();
+      if (result.stat === "OK") {
+        setUser(result.data);
+        setLoading(true);
+      } else {
+        Toast.show("请先登录!");
+        history.push("/login");
+      }
+    };
+    Login();
+  }, [history]);
+
+  return (
+    <div className={style.page}>
+      <div className={style.mine}>
+        <img
+          src={loading ? user.avatar : ""}
+          className={style.mineImg}
+          alt=""
+        />
+        <div className={style.mineUsername}>
+          {loading ? user.nickname : null}
         </div>
-        <Tabbar />
+        <button onClick={Drop} className={style.mineButton}>
+          退出登录
+        </button>
       </div>
-    );
-  }
+      <Tabbar />
+    </div>
+  );
 }

@@ -1,25 +1,24 @@
 import * as React from "react";
-import style from "./style.less";
+import style from "./style.module.scss";
 interface Props {
-  value: boolean;
+  value: boolean|undefined;
   className?: string;
   onChange: (value: boolean) => void;
 }
-export default class Checkbox extends React.Component<Props> {
-  className() {
+
+export default function Checkbox(props:Props){
+  function className(){
     let name = "iconfont " + style.checkbox;
-    if (this.props.value === true)
+    if (props.value === true)
       name += " icon-roundcheckfill " + style.checked;
     else name += " icon-round";
-    if (this.props.className) name += " " + this.props.className;
+    if (props.className) name += " " + props.className;
     return name;
   }
-  render() {
-    return (
-      <i
-        className={this.className()}
-        onClick={() => this.props.onChange(!this.props.value)}
-      />
-    );
-  }
+  return(
+    <i
+      className={className()}
+      onClick={()=>props.onChange(!props.value)}
+      ></i>
+  )
 }

@@ -1,169 +1,150 @@
 import * as React from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Tabbar from "../../components/Tabbar";
-import style from "./style.less";
+import style from "./style.module.scss";
 import Checkbox from "../../components/Checkbox";
 import CartItem from "../../components/CartItem";
-import { ICart, ISku } from "../../types";
+import { ICart } from "../../types";
+import { useState, useEffect } from "react";
 import * as api from "../../services/api";
 import Toast from "../../components/Toast";
-interface State {
-  carts: ICart[];
-  disable: boolean;
-  allselect: boolean;
-}
-export default class Cart extends React.Component<RouteComponentProps, State> {
-  state: State = {
-    disable: true,
-    allselect: false,
-    carts: [],
-  };
-  // 生命周期函数
-  componentDidMount() {
-    // this.ceshi();
-    this.GetGoods();
-  }
-  // 获取购物车数据
-  async GetGoods() {
-    let result = await api.listCart();
-    if (result.stat === "OK" && result.rows.length != 0) {
-      this.setState({
-        carts: result.rows,
-      });
-      this.state.carts.map((cart) => (cart.selected = false));
-    }
-    if (result.stat === "ERR_NOT_LOGIN") {
-      Toast.show("请先登录！", 500);
-      this.props.history.push("/login");
-    }
-  }
+
+export default function Cart() {
+  const [disable, setDisable] = useState(true);
+  const [allselect, setAllselect] = useState(false);
+  const [carts, setCarts] = useState<ICart[]>([]);
+
+  const history = useHistory();
+
   // 点击全选
-  SelectAllchange(value: boolean) {
-    if (value == false) {
-      this.setState({
-        allselect: true,
-        disable: false,
-      });
-      this.state.carts.map((cart) => (cart.selected = true));
+  const SelectAllchange = (value: boolean) => {
+    if (value === false) {
+      setDisable(false);
+      setAllselect(true);
+      carts.map((cart) => (cart.selected = true));
     } else {
-      this.setState({
-        allselect: false,
-        disable: true,
-      });
-      this.state.carts.map((cart) => (cart.selected = false));
+      setAllselect(false);
+      setDisable(true);
+      carts.map((cart) => (cart.selected = false));
     }
-  }
+  };
+
   // 全选状态判断双向绑定
-  AllSelectJudge() {
-    let length = this.state.carts.length;
-    let selecteddata = this.state.carts.filter((item) => {
-      return item.selected == true;
+  const AllSelectJudege = () => {
+    let length = carts.length;
+    let selecteddata = carts.filter((item) => {
+      return item.selected === true;
     });
-    if (selecteddata.length == length) {
-      this.setState({
-        allselect: true,
-      });
+    if (selecteddata.length === length) {
+      setAllselect(true);
     }
-    if (selecteddata.length == 0 || selecteddata.length != length) {
-      this.setState({
-        allselect: false,
-      });
+    if (selecteddata.length === 0 || selecteddata.length !== length) {
+      setAllselect(false);
     }
-  }
+  };
+
   // 按钮禁用判断
-  DisableJudge() {
-    let selecteddata = this.state.carts.filter((item) => {
-      return item.selected == true;
+  const DisableJudge = () => {
+    let selecteddata = carts.filter((item) => {
+      return item.selected === true;
     });
-    if (selecteddata.length != 0) {
-      this.setState({
-        disable: false,
-      });
+    if (selecteddata.length !== 0) {
+      setDisable(false);
       return false;
     } else {
-      this.setState({
-        disable: true,
-      });
+      setDisable(true);
       return true;
     }
-  }
-  // 购物车列表项选择状态的变化
-  Selectchange(cart: ICart) {
+  };
+
+  // 购物车列表项状态的变化
+  const Selectchange = (cart: ICart) => {
     cart.selected = !cart.selected;
-    this.setState({
-      carts: this.state.carts,
-    });
-    this.DisableJudge();
-    this.AllSelectJudge();
-  }
+    setCarts(carts);
+    DisableJudge();
+    AllSelectJudege();
+  };
+
   // 购物车删除
-  async DelectItem() {
-    let selecteddata = this.state.carts.filter((item) => {
-      return item.selected == true;
+  const DelectItem = async () => {
+    let selecteddata = carts.filter((item) => {
+      return item.selected === true;
     });
-    const del = selecteddata.map((item) => item.id);
+    const del = selecteddata.map((item) => item.id || "");
     let result = await api.removeCart(del);
     if (result.stat === "OK") {
-      let newcarts = this.state.carts.filter((item) => {
-        return item.selected == false;
+      let newcarts = carts.filter((item) => {
+        return item.selected === false;
       });
-      this.setState({
-        carts: newcarts,
-      });
-      this.DisableJudge();
-      this.AllSelectJudge();
+      setCarts(newcarts);
+      DisableJudge();
+      AllSelectJudege();
     }
-  }
-  render() {
-    let content = (
-      <div className={style.CartSelect}>
-        <Checkbox
-          value={this.state.allselect}
-          className={style.CartCheckbox}
-          onChange={() => {
-            this.SelectAllchange(this.state.allselect);
-          }}
-        />
-        <span className={style.CartSpan}>全选</span>
-        <button
-          disabled={this.state.disable}
-          className={style.CartButton}
-          onClick={this.DelectItem.bind(this)}
-        >
-          删除
-        </button>
-      </div>
-    );
+  };
 
-    let emptycontent = (
-      <div className={style.CartEmpty}>
-        {" "}
-        <i className="iconfont icon-shop"></i>
-        <div>购物车是空的</div>
+  useEffect(() => {
+    const GetGoods = async () => {
+      let result = await api.listCart();
+      if (result.stat === "OK" && result.rows.length !== 0) {
+        setCarts(result.rows);
+      }
+      if (result.stat === "ERR_NOT_LOGIN") {
+        Toast.show("请先登录!", 500);
+        history.push("/login");
+      }
+    };
+    GetGoods();
+  },[history]);
+
+  let content = (
+    <div className={style.CartSelect}>
+      <Checkbox
+        value={allselect}
+        className={style.CartCheckbox}
+        onChange={() => {
+          SelectAllchange(allselect);
+        }}
+      />
+      <span className={style.CartSpan}>全选</span>
+      <button
+        disabled={disable}
+        className={style.CartButton}
+        onClick={DelectItem}
+      >
+        删除
+      </button>
+    </div>
+  );
+
+  let emptycontent = (
+    <div className={style.CartEmpty}>
+      {" "}
+      <i className="iconfont icon-shop"></i>
+      <div>购物车是空的</div>
+    </div>
+  );
+
+  return carts.length !== 0 ? (
+    <div className={style.page}>
+      <div className={style.CartList}>
+        {carts.map((cart, i) => (
+          <CartItem
+            key={i}
+            cart={cart}
+            onSelect={() => {
+              Selectchange(cart);
+            }}
+            onDelete={() => DelectItem}
+          />
+        ))}
       </div>
-    );
-    return this.state.carts.length != 0 ? (
-      <div className={style.page}>
-        <div className={style.CartList}>
-          {this.state.carts.map((cart, i) => (
-            <CartItem
-              key={i}
-              cart={cart}
-              onSelect={() => {
-                this.Selectchange(cart);
-              }}
-              onDelete={() => this.DelectItem}
-            />
-          ))}
-        </div>
-        {content}
-        <Tabbar />
-      </div>
-    ) : (
-      <div className={style.page}>
-        {emptycontent}
-        <Tabbar />
-      </div>
-    );
-  }
+      {content}
+      <Tabbar />
+    </div>
+  ) : (
+    <div className={style.page}>
+      {emptycontent}
+      <Tabbar />
+    </div>
+  );
 }
