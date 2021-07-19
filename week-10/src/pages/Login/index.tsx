@@ -1,9 +1,10 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import { useHistory } from "react-router-dom";
 import style from "./style.module.scss";
 import * as api from "../../services/api";
 import Toast from "../../components/Toast";
+import Store from "../../store";
 
 export default function Login() {
   const [username, setUsername] = useState<string>("");
@@ -35,7 +36,9 @@ export default function Login() {
       try {
         let result = await api.login(username, password);
         if (result.stat === "OK") {
-          history.push("/me");
+          history.push('/me');
+          Store.setUsername(username);
+          Store.setUser(result.user.nickname, result.user.avatar);
         } else {
           Toast.show("用户名或密码不正确");
         }
@@ -46,6 +49,10 @@ export default function Login() {
       Toast.show("请输入账号或密码");
     }
   };
+
+  useEffect(() => {
+    Disable()
+  })
 
   return (
     <div className={style.page}>

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Tabbar from "../../components/Tabbar";
 import style from "./style.module.scss";
+import Store from "../../store";
 import * as api from "../../services/api";
 import { IUser } from "../../types";
 import Toast from "../../components/Toast";
@@ -24,9 +25,12 @@ export default function Me() {
 
   useEffect(() => {
     const Login = async () => {
-      let result = await api.userInfo();
-      if (result.stat === "OK") {
-        setUser(result.data);
+      if (Store.avatar && Store.username) {
+        setUser({
+          username: Store.username,
+          nickname: Store.nickname,
+          avatar: Store.avatar,
+        });
         setLoading(true);
       } else {
         Toast.show("请先登录!");

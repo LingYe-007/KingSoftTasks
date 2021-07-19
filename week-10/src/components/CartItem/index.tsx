@@ -18,6 +18,7 @@ export default function CartItem(props: Props) {
           className={style.CartCheckbox}
           onChange={props.onSelect}
         />
+         <img src={props.cart.cover}  alt=""/>
         <div className={style.ItemText}>
           <div className={style.ItemTitle}>{props.cart.title}</div>
           <div className={style.ItemPrice}>￥{props.cart.price}</div>

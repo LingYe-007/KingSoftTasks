@@ -18,3 +18,18 @@ class Store {
 }
 
 export default new Store();
+// Store.avatar = "";
+// Store.nickname = "";
+// Store.username = "";
+// Store.prototype.setUsername = (name: string) => {
+//   Store.nickname = name;
+// };
+// Store.prototype.setUser = (nickname: string, avatar: string) => {
+//   Store.nickname = nickname;
+//   Store.avatar = avatar;
+// };
+// function Store() {
+//   return makeAutoObservable(Store);
+// }
+
+// export default new Store();

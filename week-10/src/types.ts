@@ -75,7 +75,7 @@ export interface IUser {
   /**
    * 用户角色
    */
-  role: UserRole
+  role?: UserRole
 }
 
 export type Pick<T> = {
